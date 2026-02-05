@@ -5,6 +5,7 @@ import Header from "@/app/components/layout/Header";
 import PageTransition from "@/app/components/layout/PageTransition";
 import Cursor from "@/app/components/ui/Cursor";
 import Ambient from "@/app/components/ui/Ambient";
+import VisitCounter from "@/app/components/ui/VisitCounter";
 export default function RootLayout({
   children,
 }: {
@@ -19,6 +20,7 @@ export default function RootLayout({
         <Ambient />
         <Header />
         <PageTransition>{children}</PageTransition>
+        <VisitCounter />
         <Cursor />
       </body>
     </html>

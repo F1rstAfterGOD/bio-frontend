@@ -4,6 +4,7 @@ html,
 body {
   background: black;
   color: white;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
@@ -14,11 +15,6 @@ body {
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-::selection {
-  background: white;
-  color: black;
 }
 
 .hover-text {
@@ -35,7 +31,7 @@ body::after {
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 }
 
 
@@ -71,5 +67,72 @@ body::after {
   }
   50% {
     transform: translateY(-6px);
+  }
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+main {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+p {
+  line-height: 1.6;
+}
+
+button, a {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+.client-layout section {
+  margin-top: 3rem;
+}
+
+.client-layout section:first-child {
+  margin-top: 1.5rem;
+}
+
+.client-layout h1 {
+  margin-bottom: 1rem;
+}
+
+.client-layout h2 {
+  margin-bottom: 0.75rem;
+}
+
+.client-layout p {
+  margin-top: 0.5rem;
+}
+
+/* ===========================
+   Mobile UX
+   =========================== */
+
+@media (max-width: 640px) {
+  main {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  section {
+    margin-top: 2rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 0.95rem;
   }
 }

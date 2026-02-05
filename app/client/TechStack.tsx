@@ -1,65 +1,116 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const STACK = [
+type Tech = {
+  name: string;
+  description: string;
+  details: string;
+};
+
+const techStack: Tech[] = [
+  {
+    name: "HTML",
+    description: "Structure",
+    details:
+      "Семантическая разметка, доступность, SEO и правильная структура для масштабируемых интерфейсов."
+  },
+  {
+    name: "CSS / Tailwind",
+    description: "Visual system",
+    details:
+      "Glassmorphism, адаптив, анимации, mobile-first и чистый UI без визуального мусора."
+  },
+  {
+    name: "JavaScript",
+    description: "Logic",
+    details:
+      "Асинхронность, события, API, управление состоянием и интерактив."
+  },
   {
     name: "React",
-    description: "Component-driven UI. Predictable state. Clean architecture.",
+    description: "Components",
+    details:
+      "Hooks, композиция, переиспользуемые компоненты и чистая архитектура."
   },
   {
     name: "Next.js",
-    description: "Server-first mindset. SEO, routing, performance.",
-  },
-  {
-    name: "Tailwind",
-    description: "Design directly in code. No abstraction noise.",
-  },
-  {
-    name: "TypeScript",
-    description: "Less guessing. More confidence. Safer refactors.",
-  },
+    description: "Production",
+    details:
+      "App Router, Server Components, SEO, оптимизация и деплой под Vercel."
+  }
 ];
 
-export default function TechStack() {
-  const [active, setActive] = useState<number | null>(null);
+export default function Techstack() {
+  const [active, setActive] = useState<Tech | null>(null);
 
   return (
-    <section className="w-full max-w-3xl mx-auto mt-24">
-      <h2 className="text-2xl font-light tracking-tight mb-8 text-center">
-        Stack
+    <section className="relative mt-24">
+      {/* Заголовок компактнее */}
+      <h2 className="text-2xl mb-6 text-center tracking-tight">
+        Technology Stack
       </h2>
 
-      <div className="space-y-4">
-        {STACK.map((tech, index) => (
-          <div
+      {/* Карточки ближе друг к другу */}
+      <div className="flex flex-wrap justify-center gap-3">
+        {techStack.map((tech) => (
+          <button
             key={tech.name}
-            onMouseEnter={() => setActive(index)}
+            onMouseEnter={() => setActive(tech)}
             onMouseLeave={() => setActive(null)}
-            className="group border border-white/10 rounded-xl p-6 transition-all duration-300"
+            className="
+              relative
+              rounded-xl
+              border border-white/10
+              px-10 py-6
+              backdrop-blur-md
+              bg-white/5
+              hover:bg-white/10
+              hover:border-white/30
+              transition
+            "
           >
-            <div className="flex justify-between items-center">
-              <span className="text-lg tracking-wide">
-                {tech.name}
-              </span>
-
-              <span className="text-xs opacity-40 group-hover:opacity-80 transition">
-                hover
-              </span>
+            <div className="text-sm font-medium">{tech.name}</div>
+            <div className="text-[11px] text-white/50">
+              {tech.description}
             </div>
-
-            <div
-              className={`overflow-hidden transition-all duration-300 ${
-                active === index ? "max-h-40 mt-4 opacity-100" : "max-h-0 opacity-0"
-              }`}
-            >
-              <p className="text-sm text-white/70 leading-relaxed">
-                {tech.description}
-              </p>
-            </div>
-          </div>
+          </button>
         ))}
       </div>
+
+      {/* Hover panel с Framer Motion */}
+      <AnimatePresence>
+        {active && (
+          <motion.div
+            key={active.name}
+            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 6, scale: 0.98 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="
+              pointer-events-none
+              absolute
+              left-1/2
+              top-full
+              mt-6
+              w-[92%]
+              max-w-lg
+              -translate-x-1/2
+              rounded-2xl
+              border border-white/10
+              bg-black/70
+              backdrop-blur-xl
+              p-5
+            "
+          >
+            <div className="text-base mb-1">{active.name}</div>
+            <p className="text-sm text-white/70 leading-relaxed">
+              {active.details}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
